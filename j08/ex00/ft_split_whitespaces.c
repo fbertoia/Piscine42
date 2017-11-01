@@ -1,0 +1,111 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split_whitespaces.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbertoia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/11 21:22:06 by fbertoia          #+#    #+#             */
+/*   Updated: 2017/09/11 21:22:08 by fbertoia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <stdlib.h>
+
+int		size_of_word(char *str, int i, int counter)
+{
+	int biggest_word;
+
+	biggest_word = 0;
+	while (str[i])
+	{
+		while (str[i] && str[i] != '\n' && str[i] != '\t' && str[i] != ' ')
+		{
+			counter++;
+			i++;
+		}
+		if (counter > biggest_word)
+			biggest_word = counter;
+		counter = 0;
+		if (str[i])
+			i++;
+	}
+	return (biggest_word + 1);
+}
+
+int		number_of_word(char *str, int i, int flag)
+{
+	int number_of_word;
+
+	number_of_word = 0;
+	while (str[i])
+	{
+		while (str[i] && str[i] != '\n' && str[i] != '\t' && str[i] != ' ')
+		{
+			if (flag)
+			{
+				number_of_word++;
+				flag = 0;
+			}
+			i++;
+		}
+		flag = 1;
+		if (str[i])
+			i++;
+	}
+	return (number_of_word + 1);
+}
+
+char	**array_initializer(char **arr, char *str, int i)
+{
+	arr = (char **)malloc(sizeof(char *) * number_of_word(str, 0, 1));
+	while (i < number_of_word(str, 0, 1))
+	{
+		arr[i] = (char *)malloc(sizeof(char) * size_of_word(str, 0, 0));
+		i++;
+	}
+	return (arr);
+}
+
+char	**array_wording(char **arr, char *str, int i, int j)
+{
+	int k;
+
+	k = 0;
+	i = 0;
+	while (str[i])
+	{
+		while (str[i] && str[i] != '\n' && str[i] != '\t' && str[i] != ' ')
+		{
+			while (str[i] && str[i] != '\n' && str[i] != '\t' && str[i] != ' ')
+			{
+				arr[j][k] = str[i];
+				k++;
+				i++;
+			}
+			arr[j][k] = 0;
+			j++;
+		}
+		k = 0;
+		if (str[i])
+			i++;
+	}
+	arr[j] = NULL;
+	return (arr);
+}
+
+char	**ft_split_whitespaces(char *str)
+{
+	char	**arr;
+
+	arr = NULL;
+	if (str == NULL)
+	{
+		arr = (char **)malloc(sizeof(char *) * 1);
+		arr[0] = NULL;
+		return (arr);
+	}
+	arr = array_initializer(arr, str, 0);
+	arr = array_wording(arr, str, 0, 0);
+	return (arr);
+}

@@ -1,0 +1,5 @@
+Credentials cache: API:78753BA9-9342-4BE9-B23B-A6F514792F40
+        Principal: fbertoia@42.FR
+
+  Issued                Expires               Principal
+Aug 28 17:35:48 2017  Sep  4 17:35:37 2017  krbtgt/42.FR@42.FR
